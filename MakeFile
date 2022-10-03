@@ -1,0 +1,2 @@
+all:
+	g++ -Wall -g my_snipets/sdl_tut_3.cpp my_snipets/game.cpp -Isrc/Include/SDL2 -Isrc/headers -Lsrc/lib -lmingw32 -lSDL2main -lSDL2
