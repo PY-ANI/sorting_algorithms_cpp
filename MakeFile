@@ -1,3 +1,0 @@
-cc = g++
-cflags = -lglu32 -lopengl32 -lfreeglut
-
