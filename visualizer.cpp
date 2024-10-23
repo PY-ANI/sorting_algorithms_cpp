@@ -29,7 +29,7 @@ int main(void){
 
     // Support vars
     int itemwidth = 1, itemcount = screenWidth/itemwidth;
-    unsigned short current_algo_index = 0;
+    short current_algo_index = 0;
 
     std::vector<int> vec(itemcount,0);
 
@@ -66,10 +66,12 @@ int main(void){
         }
         else if (IsKeyPressed(KEY_N)){
             current_algo_index = (unsigned short)(current_algo_index+1)%algo_count;
+            // log(current_algo_index);
             SetWindowTitle((title+"- "+algo_types[current_algo_index]).c_str());
         }
         else if (IsKeyPressed(KEY_P)){
-            current_algo_index = (unsigned short)(current_algo_index-1)%algo_count;
+            current_algo_index = ((current_algo_index-1) < 0)?(algo_count-1):(current_algo_index-1);
+            // log(current_algo_index);
             SetWindowTitle((title+"- "+algo_types[current_algo_index]).c_str());
         }
         else if (IsKeyPressed(KEY_Q)){

@@ -15,6 +15,8 @@
 #define milisec_sleep(s) std::this_thread::sleep_for(std::chrono::milliseconds(s))
 #define sec_sleep(s) std::this_thread::sleep_for(std::chrono::seconds(s))
 
+#define log(s) std::cout<<s<<std::endl;
+
 // Structures
 struct label {
     const char *name;
@@ -30,7 +32,7 @@ extern const int algo_count;
 extern bool IsThreadAlive;
 extern bool IsAborted;
 extern bool IsVectorSorted;
-extern fn algo_defs[2];
+extern fn algo_defs[3];
 extern std::vector<std::string> algo_types;
 
 // Static Functions

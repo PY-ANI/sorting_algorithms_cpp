@@ -4,10 +4,11 @@
 bool IsAborted = 0;
 bool IsThreadAlive = 0;
 bool IsVectorSorted = 0;
-const int algo_count = 2;
+const int algo_count = 3;
 fn algo_defs[algo_count] = {
     selection_sort,
-    bubble_sort
+    bubble_sort,
+    insertion_sort
 };
 
 std::vector<std::string> algo_types = {
@@ -81,6 +82,24 @@ void bubble_sort(std::vector<int> &vec){
             }
         }
         if(!HasSwapped) break;
+    }
+    ResetGlobalFlags();
+}
+
+void insertion_sort(std::vector<int> &vec){
+    // log("Yes");
+    const int length = vec.size();
+    for (int i = 1; i < length; i++){
+        if(IsAborted) break;
+        int j = i-1, key = vec[i];
+        while (j >= 0 && vec[j] > key){
+            if(IsAborted) break;
+            nanosec_sleep(500);
+            vec[j+1] = vec[j];
+            j--;
+        }
+        nanosec_sleep(500);
+        vec[j+1] = key;
     }
     ResetGlobalFlags();
 }
