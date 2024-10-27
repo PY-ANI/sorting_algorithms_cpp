@@ -32,13 +32,17 @@ extern const int algo_count;
 extern bool IsThreadAlive;
 extern bool IsAborted;
 extern bool IsVectorSorted;
-extern fn algo_defs[3];
+extern fn algo_defs[4];
 extern std::vector<std::string> algo_types;
 
-// Static Functions
-static void ResetGlobalFlags(void);
 
 // Functions
+int getSleepTime(void);
+
+void upSleepTimeBy(int);
+
+void lowSleepTimeBy(int);
+
 void swap(int &, int &);
 
 bool IsSorted(std::vector<int> &);

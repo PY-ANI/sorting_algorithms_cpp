@@ -10,7 +10,7 @@ outfile = main.out
 all: clean build exec
 
 build:
-	$(cc) ${cc_standard} ${debugflags} ${optflags} ${libs} ${target} ${deps} ${libs} ${raylibflags} -o ${outfile}
+	$(cc) ${cc_standard} ${debugflags} ${libs} ${target} ${deps} ${libs} ${raylibflags} -o ${outfile}
 
 exec:
 	./${outfile}

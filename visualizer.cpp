@@ -44,6 +44,9 @@ int main(void){
 
     SetTargetFPS(targetframes); // setting-up target frames
 
+    PopulateVec(vec, setup_randgen(screenheight-50)); //4324324324############
+
+
     // Mainloop
     while(!WindowShouldClose()){
 
@@ -59,7 +62,6 @@ int main(void){
                 sort_th = std::thread(algo_defs[current_algo_index], std::ref(vec));
                 sort_th.detach();
             }
-            // IsSorted(vec);
         }
         else if (IsKeyPressed(KEY_C) && !IsAborted){
             IsAborted = 1;
@@ -76,6 +78,7 @@ int main(void){
         }
         else if (IsKeyPressed(KEY_Q)){
             std::cout<<IsAborted<<" "<<IsThreadAlive<<std::endl;
+            std::cout<<IsSorted(vec)<<std::endl;
         }
         
 
