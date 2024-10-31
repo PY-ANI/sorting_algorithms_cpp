@@ -44,8 +44,7 @@ int main(void){
 
     SetTargetFPS(targetframes); // setting-up target frames
 
-    PopulateVec(vec, setup_randgen(screenheight-50)); //4324324324############
-
+    PopulateVec(vec, setup_randgen(screenheight-50)); 
 
     // Mainloop
     while(!WindowShouldClose()){

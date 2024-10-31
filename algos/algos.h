@@ -32,7 +32,7 @@ extern const int algo_count;
 extern bool IsThreadAlive;
 extern bool IsAborted;
 extern bool IsVectorSorted;
-extern fn algo_defs[4];
+extern fn algo_defs[6];
 extern std::vector<std::string> algo_types;
 
 
@@ -54,5 +54,9 @@ void bubble_sort(std::vector<int> &);
 void insertion_sort(std::vector<int> &);
 
 void merge_sort(std::vector<int> &);
+
+void hoare_quick_sort(std::vector<int> &);
+
+void lomuto_quick_sort(std::vector<int> &);
 
 #endif

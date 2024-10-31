@@ -4,20 +4,25 @@
 bool IsAborted = 0;
 bool IsThreadAlive = 0;
 bool IsVectorSorted = 0;
-const int algo_count = 4;
+const int algo_count = 6;
 
 fn algo_defs[algo_count] = {
     selection_sort,
     bubble_sort,
     insertion_sort,
-    merge_sort
+    merge_sort,
+    hoare_quick_sort,
+    lomuto_quick_sort
 };
 
 std::vector<std::string> algo_types = {
     "Selection Sort",
     "Bubble Sort",
     "Insertion Sort",
-    "Merge Sort"
+    "Merge Sort",
+    "Quick Sort + Hoare's Partitioning",
+    "Quick Sort + Lomuto's Partitioning",
+    "Counting Sort"
 };
 
 // static vars
@@ -34,7 +39,65 @@ static void ResetGlobalFlags(void){
     IsThreadAlive = 0;
 }
 
-static void merge(std::vector<int> &vec, int high, int mid, int low){
+// functions
+int LomutoPartitioning(std::vector<int> &vec, int high, int low, const int key){
+    int i = low - 1;
+    for(int j = low; j < high; j++){
+        if(vec[j] <= key){
+            i++;
+            nanosec_sleep(sleep_time);
+            swap(vec[j], vec[i]);
+        }
+    }
+    nanosec_sleep(sleep_time);
+    swap(vec[high], vec[++i]);
+
+    return i;
+}
+
+int HoarePartitioning(std::vector<int> &vec, int high, int low, const int key){
+    int i = low - 1, j = high + 1;
+
+    while (1){
+
+        do{
+            i++;
+        }while(vec[i] < key);
+
+        do{
+            j--;
+        }while(vec[j] > key);
+
+        if(i >= j) return j;
+
+        nanosec_sleep(sleep_time);
+        swap(vec[i], vec[j]);
+    }
+
+    return 0; //dummy return
+}
+
+void hoare_sub_quick_sort(std::vector<int> &vec, int high, int low){
+    if ( high <= low ) return;
+
+    const int key = vec[(low + (high - low)/2)];
+    int p = HoarePartitioning(vec, high, low, key);
+
+    hoare_sub_quick_sort(vec, p, low);
+    hoare_sub_quick_sort(vec, high, p+1);
+}
+
+void lomuto_sub_quick_sort(std::vector<int> &vec, int high, int low){
+    if ( high <= low ) return;
+
+    const int key = vec[high];
+    int p = LomutoPartitioning(vec, high, low, key);
+
+    lomuto_sub_quick_sort(vec, p-1, low);
+    lomuto_sub_quick_sort(vec, high, p+1);
+}
+
+void merge(std::vector<int> &vec, int high, int mid, int low){
     if (IsAborted) return;
 
     int n1 = mid - low + 1 ,n2 = high - mid;
@@ -63,7 +126,7 @@ static void merge(std::vector<int> &vec, int high, int mid, int low){
     }
 }
 
-static void merge_sort_subsection(std::vector<int> &vec, int high, int low){
+void merge_sort_subsection(std::vector<int> &vec, int high, int low){
     if ((high > low) && !IsAborted){
 
         int mid = low+(high-low)/2;
@@ -74,7 +137,6 @@ static void merge_sort_subsection(std::vector<int> &vec, int high, int low){
     }
 }
 
-// functions
 int getSleepTime(){
     return sleep_time;
 }
@@ -165,5 +227,17 @@ void insertion_sort(std::vector<int> &vec){
 void merge_sort(std::vector<int> &vec){
     int vec_size = vec.size()-1;
     merge_sort_subsection(vec, vec_size, 0);
+    ResetGlobalFlags();
+}
+
+void hoare_quick_sort(std::vector<int> &vec){
+    int vec_size = vec.size()-1;
+    hoare_sub_quick_sort(vec, vec_size, 0);
+    ResetGlobalFlags();
+}
+
+void lomuto_quick_sort(std::vector<int> &vec){
+    int vec_size = vec.size()-1;
+    lomuto_sub_quick_sort(vec, vec_size, 0);
     ResetGlobalFlags();
 }
